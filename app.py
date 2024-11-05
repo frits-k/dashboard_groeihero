@@ -7,6 +7,19 @@ st.image("logo.png", width=200)  # Place your logo here
 
 st.write("This is a prototype dashboard displaying dummy data.")
 
+# Create a row with 3 equal-width columns
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(label="Impressions", value="1,500")
+
+with col2:
+    st.metric(label="Clicks", value="300")
+
+with col3:
+    st.metric(label="Conversions", value="60")
+
+
 # Load dummy data
 with open("dummy_data.json") as f:
     data = json.load(f)
