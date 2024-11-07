@@ -1,39 +1,241 @@
 import streamlit as st
 import pandas as pd
-import json
+import numpy as np
+import datetime
+import plotly.express as px
+import matplotlib.pyplot as plt
 
-st.title("Groeihero Dashboard")
-st.image("logo.png", width=200)  # Place your logo here
+primaryColor = "#E84A27"          # Orange from logo for primary actions
 
-st.write("This is a prototype dashboard displaying dummy data.")
+# Sidebar
+st.sidebar.image("logo.jpeg", width=200)  # Display the logo at the top of the sidebar
+st.sidebar.title("Groeihero")
+st.sidebar.write("Add any sidebar controls here, such as filters or navigation.")
+# Title
+st.title("Groeidashboard")
 
-# Create a row with 3 equal-width columns
-col1, col2, col3 = st.columns(3)
+# Tabs for Different Platforms
+tabs = st.tabs(["Google Analytics", "Google Ads", "Facebook", "Instagram", "TikTok", "Catalogus"])
 
-with col1:
-    st.metric(label="Impressions", value="1,500")
+# Content for Google Analytics Tab
+with tabs[0]:
+    st.header("Google Analytics")
 
-with col2:
-    st.metric(label="Clicks", value="300")
+    # 1. Bounce Rate Visualization using Plotly
+    st.subheader("Bounce Rate over de Afgelopen Week")
+    dates = pd.date_range(end=datetime.date.today(), periods=7)
+    bounce_rate = np.random.uniform(30, 70, size=7)  # Dummy bounce rate data
+    bounce_data = pd.DataFrame({"Datum": dates, "Bounce Rate": bounce_rate})
+    fig = px.line(bounce_data, x="Datum", y="Bounce Rate", title="Bounce Rate Trend")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
 
-with col3:
-    st.metric(label="Conversions", value="60")
+    # 2. Landing Pages Visualization using Plotly
+    st.subheader("Populaire Landingpages")
+    landing_pages = {
+        "Pagina": ["Home", "Producten", "Contact", "Over Ons", "Blog"],
+        "Bezoekers": np.random.randint(500, 1500, size=5)  # Dummy visitor data for each landing page
+    }
+    landing_pages_df = pd.DataFrame(landing_pages)
+    fig = px.bar(landing_pages_df, x="Pagina", y="Bezoekers", title="Populaire Landingpages", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
 
+    # 3. Events Visualization using Plotly
+    st.subheader("Top Gebeurtenissen (Events) over de Afgelopen Week")
+    events = {
+        "Event": ["Aanmeldingen", "Video Bekeken", "Download", "Button Klik", "Formulier Ingevuld"],
+        "Frequentie": np.random.randint(100, 500, size=5)  # Dummy event frequency data
+    }
+    events_df = pd.DataFrame(events)
+    fig = px.bar(events_df, x="Event", y="Frequentie", title="Top Gebeurtenissen", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
 
-# Load dummy data
-with open("dummy_data.json") as f:
-    data = json.load(f)
-df = pd.DataFrame([data])
+    # 4. Conversion Rate Visualization using Plotly
+    st.subheader("Conversies over de Afgelopen Week")
+    conversion_rate = np.random.uniform(2, 10, size=7)  # Dummy conversion rate data
+    conversion_data = pd.DataFrame({"Datum": dates, "Conversies (%)": conversion_rate})
+    fig = px.line(conversion_data, x="Datum", y="Conversies (%)", title="Conversies Trend")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
 
-# Display KPIs
-st.metric(label="Impressions", value=df["impressions"][0])
-st.metric(label="Clicks", value=df["clicks"][0])
-st.metric(label="Bounce Rate", value=f"{df['bounce_rate'][0]*100}%")
-st.metric(label="Conversions", value=df["conversions"][0])
+# Content for Google Ads Tab
+with tabs[1]:
+    st.header("Google Ads")
 
-# Date filter
-date_options = ["2023-10-01", "2023-10-02", "2023-10-03"]
-selected_date = st.selectbox("Select Date", date_options)
+    # Dummy data for the last 7 days
+    dates = pd.date_range(end=datetime.date.today(), periods=7)
+    data = pd.DataFrame({
+        "Date": dates,
+        "Vertoningen": np.random.randint(1000, 5000, size=7),          # Random impressions
+        "Vertoningspercentage": np.random.uniform(50, 100, size=7),    # Random impression share in percentage
+        "Kliks": np.random.randint(200, 1000, size=7)                  # Random clicks
+    })
 
-# Filter df by date
-filtered_df = df[df['date'] == selected_date]
+    # Show Vertoningen (Impressions) trend using Plotly
+    st.subheader("Vertoningen (over de Afgelopen Week)")
+    fig = px.line(data, x="Date", y="Vertoningen", title="Vertoningen Trend")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+    # Show Vertoningspercentage (Impression Share) trend using Plotly
+    st.subheader("Vertoningspercentage (over de Afgelopen Week)")
+    fig = px.line(data, x="Date", y="Vertoningspercentage", title="Vertoningspercentage Trend")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+    # Show Kliks (Clicks) trend using Plotly
+    st.subheader("Kliks (over de Afgelopen Week)")
+    fig = px.line(data, x="Date", y="Kliks", title="Kliks Trend")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+# Content for Facebook Tab
+with tabs[2]:
+    st.header("Facebook")
+
+    # 1. Engagement Rate using Plotly
+    st.subheader("Engagement Rate over de Afgelopen Week")
+    engagement_rate = np.random.uniform(2, 10, size=7)  # Dummy engagement rate data
+    engagement_data = pd.DataFrame({"Datum": dates, "Engagement Rate (%)": engagement_rate})
+    fig = px.line(engagement_data, x="Datum", y="Engagement Rate (%)", title="Engagement Rate Trend")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+    # 2. Post Reach for Top 5 Posts using Plotly
+    st.subheader("Bereik van Top 5 Berichten")
+    post_reach = {
+        "Bericht": [f"Post {i+1}" for i in range(5)],
+        "Bereik": np.random.randint(1000, 5000, size=5)  # Dummy reach data
+    }
+    post_reach_df = pd.DataFrame(post_reach)
+    fig = px.bar(post_reach_df, x="Bericht", y="Bereik", title="Top 5 Bereik van Berichten", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 3. Page Followers Trend using Plotly
+    st.subheader("Volgers Groei over de Afgelopen Maand")
+    follower_dates = pd.date_range(end=datetime.date.today(), periods=30)
+    followers = np.cumsum(np.random.randint(10, 50, size=30))  # Dummy followers growth data
+    followers_data = pd.DataFrame({"Datum": follower_dates, "Volgers": followers})
+    fig = px.line(followers_data, x="Datum", y="Volgers", title="Volgers Groei")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+# Content for Instagram Tab
+with tabs[3]:
+    st.header("Instagram")
+
+    # 1. Story Views using Plotly
+    st.subheader("Trend van Verhaal Weergaven over de Afgelopen Week")
+    dates = pd.date_range(end=datetime.date.today(), periods=7)
+    story_views = np.random.randint(500, 1500, size=7)  # Dummy story views data
+    story_data = pd.DataFrame({"Datum": dates, "Verhaal Weergaven": story_views})
+    fig = px.line(story_data, x="Datum", y="Verhaal Weergaven", title="Verhaal Weergaven Trend")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
+
+    # 2. Top Performing Posts (Likes) using Plotly
+    st.subheader("Top Berichten op Basis van Likes")
+    post_likes = {
+        "Bericht": [f"Post {i+1}" for i in range(5)],
+        "Likes": np.random.randint(100, 1000, size=5)  # Dummy likes data
+    }
+    post_likes_df = pd.DataFrame(post_likes)
+    fig = px.bar(post_likes_df, x="Bericht", y="Likes", title="Top Berichten op Basis van Likes", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 3. Follower Growth using Plotly
+    st.subheader("Volgers Groei over de Afgelopen Maand")
+    follower_dates = pd.date_range(end=datetime.date.today(), periods=30)
+    followers_instagram = np.cumsum(np.random.randint(10, 40, size=30))  # Dummy followers growth data
+    followers_data_instagram = pd.DataFrame({"Datum": follower_dates, "Volgers": followers_instagram})
+    fig = px.line(followers_data_instagram, x="Datum", y="Volgers", title="Volgers Groei")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
+
+# Content for TikTok Tab
+with tabs[4]:
+    st.header("TikTok")
+
+    # 1. Video Views Trend using Plotly
+    st.subheader("Video Weergaven over de Afgelopen Week")
+    dates = pd.date_range(end=datetime.date.today(), periods=7)
+    video_views = np.random.randint(800, 3000, size=7)  # Dummy video views data
+    video_views_data = pd.DataFrame({"Datum": dates, "Video Weergaven": video_views})
+    fig = px.line(video_views_data, x="Datum", y="Video Weergaven", title="Video Weergaven Trend")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
+
+    # 2. Top Performing Videos (Engagement) using Plotly
+    st.subheader("Top Video's op Basis van Engagement")
+    video_engagement = {
+        "Video": [f"Video {i+1}" for i in range(5)],
+        "Engagement": np.random.randint(1000, 5000, size=5)  # Dummy engagement data
+    }
+    video_engagement_df = pd.DataFrame(video_engagement)
+    fig = px.bar(video_engagement_df, x="Video", y="Engagement", title="Top Video's op Basis van Engagement", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 3. New Followers Trend using Plotly
+    st.subheader("Nieuwe Volgers over de Afgelopen Week")
+    new_followers = np.random.randint(50, 200, size=7)  # Dummy new followers data
+    new_followers_data = pd.DataFrame({"Datum": dates, "Nieuwe Volgers": new_followers})
+    fig = px.line(new_followers_data, x="Datum", y="Nieuwe Volgers", title="Nieuwe Volgers Trend")
+    fig.update_traces(line=dict(color=primaryColor))  # Apply primary color
+    st.plotly_chart(fig)
+
+# Catalog of Streamlit Visualizations
+with tabs[5]:
+    st.header("Visualisatie Catalogus")
+
+    # Generate some example data for use in the visualizations
+    dates = pd.date_range(end=datetime.date.today(), periods=30)
+    data = pd.DataFrame({
+        "Datum": dates,
+        "Waarde": np.random.randint(100, 500, size=30)
+    })
+
+    # 1. Line Chart using Plotly
+    st.subheader("Lijn Grafiek (Line Chart)")
+    fig = px.line(data, x="Datum", y="Waarde", title="Lijn Grafiek")
+    fig.update_traces(line=dict(color=primaryColor))
+    st.plotly_chart(fig)
+
+    # 2. Area Chart using Plotly
+    st.subheader("Gebied Grafiek (Area Chart)")
+    fig = px.area(data, x="Datum", y="Waarde", title="Gebied Grafiek", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 3. Bar Chart using Plotly
+    st.subheader("Staafdiagram (Bar Chart)")
+    fig = px.bar(data, x="Datum", y="Waarde", title="Staafdiagram", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 4. Map Chart
+    st.subheader("Kaart (Map Chart)")
+    map_data = pd.DataFrame({
+        'lat': np.random.uniform(-90, 90, 100),
+        'lon': np.random.uniform(-180, 180, 100)
+    })
+    st.map(map_data)
+
+    # 5. Histogram using Plotly
+    st.subheader("Histogram")
+    hist_data = np.random.normal(50, 15, 1000)
+    fig = px.histogram(pd.DataFrame(hist_data, columns=['Waarde']), x="Waarde", title="Histogram", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 6. Scatter Plot using Plotly
+    st.subheader("Spreidingsdiagram (Scatter Plot)")
+    scatter_data = pd.DataFrame({
+        "x": np.random.randn(100),
+        "y": np.random.randn(100)
+    })
+    fig = px.scatter(scatter_data, x="x", y="y", title="Spreidingsdiagram met Plotly", color_discrete_sequence=[primaryColor])
+    st.plotly_chart(fig)
+
+    # 7. Pie Chart using Matplotlib
+    st.subheader("Taartdiagram (Pie Chart)")
+    pie_data = pd.Series([50, 30, 20], index=["Categorie A", "Categorie B", "Categorie C"], name="Waarde")
+    fig, ax = plt.subplots()
+    ax.pie(pie_data, labels=pie_data.index, autopct="%1.1f%%", startangle=90, colors=[primaryColor, "#FAD02E", "#000000"])
+    st.pyplot(fig)

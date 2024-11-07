@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#E84A27"          # Orange from logo for primary actions
+backgroundColor = "#FFFFFF"       # White for the main background
+secondaryBackgroundColor = "#FFFFF2"  # Yellow from logo for sidebar or secondary backgrounds
+textColor = "#000000"             # Black for main text color
+font = "sans serif"               # Set a font family (optional)
