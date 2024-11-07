@@ -10,7 +10,86 @@ primaryColor = "#E84A27"          # Orange from logo for primary actions
 # Sidebar
 st.sidebar.image("logo.jpeg", width=200)  # Display the logo at the top of the sidebar
 st.sidebar.title("Groeihero")
-st.sidebar.write("Add any sidebar controls here, such as filters or navigation.")
+st.sidebar.write("Voorbeeld filters:")
+
+# Text Input
+st.sidebar.subheader("Text Input")
+text_input = st.sidebar.text_input("Enter some text:", "Sample text")
+
+# Text Area
+st.sidebar.subheader("Text Area")
+text_area = st.sidebar.text_area("Enter longer text here:", "This is a sample longer text area.")
+
+# Number Input
+st.sidebar.subheader("Number Input")
+number_input = st.sidebar.number_input("Choose a number:", min_value=0, max_value=100, value=25, step=5)
+
+# Date Input
+st.sidebar.subheader("Date Input")
+date_input = st.sidebar.date_input("Pick a date:", value=datetime.date.today())
+
+# Time Input
+st.sidebar.subheader("Time Input")
+time_input = st.sidebar.time_input("Pick a time:", value=datetime.time(12, 0))
+
+# Checkbox
+st.sidebar.subheader("Checkbox")
+checkbox = st.sidebar.checkbox("Check this box")
+
+# Radio Buttons
+st.sidebar.subheader("Radio Buttons")
+radio_choice = st.sidebar.radio("Choose an option:", ["Option 1", "Option 2", "Option 3"])
+
+# Select Box
+st.sidebar.subheader("Select Box")
+select_box = st.sidebar.selectbox("Choose from the list:", ["Choice 1", "Choice 2", "Choice 3"])
+
+# Multi-Select Box
+st.sidebar.subheader("Multi-Select Box")
+multi_select = st.sidebar.multiselect("Select multiple options:", ["Choice A", "Choice B", "Choice C"])
+
+# Slider
+st.sidebar.subheader("Slider")
+slider = st.sidebar.slider("Slide to choose a value:", min_value=0, max_value=100, value=50)
+
+# Range Slider
+st.sidebar.subheader("Range Slider")
+range_slider = st.sidebar.slider("Select a range:", min_value=0, max_value=100, value=(20, 80))
+
+# File Uploader
+st.sidebar.subheader("File Uploader")
+file_uploader = st.sidebar.file_uploader("Upload a file:", type=["csv", "txt", "pdf"])
+
+# Color Picker
+st.sidebar.subheader("Color Picker")
+color_picker = st.sidebar.color_picker("Pick a color:", "#00f900")
+
+# Form with Submit Button
+st.sidebar.subheader("Form Example")
+with st.sidebar.form(key="example_form"):
+    form_text = st.text_input("Enter form text:")
+    form_slider = st.slider("Form slider:", 0, 10, 5)
+    form_submit = st.form_submit_button("Submit Form")
+
+# Displaying Selected Inputs
+st.sidebar.write("### Selected Inputs:")
+st.sidebar.write("Text Input:", text_input)
+st.sidebar.write("Text Area:", text_area)
+st.sidebar.write("Number Input:", number_input)
+st.sidebar.write("Date Input:", date_input)
+st.sidebar.write("Time Input:", time_input)
+st.sidebar.write("Checkbox:", checkbox)
+st.sidebar.write("Radio Choice:", radio_choice)
+st.sidebar.write("Select Box:", select_box)
+st.sidebar.write("Multi-Select:", multi_select)
+st.sidebar.write("Slider:", slider)
+st.sidebar.write("Range Slider:", range_slider)
+st.sidebar.write("Uploaded File:", file_uploader)
+st.sidebar.write("Picked Color:", color_picker)
+st.sidebar.write("Form Text:", form_text)
+st.sidebar.write("Form Slider:", form_slider)
+st.sidebar.write("Form Submitted:", form_submit)
+
 # Title
 st.title("Groeidashboard")
 
